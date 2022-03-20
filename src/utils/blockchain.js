@@ -1,5 +1,5 @@
 /* eslint-disable no-throw-literal */
-import { ethers, utils, constants } from "ethers"
+import { ethers, utils, constants, BigNumber } from "ethers"
 import { ERC721_PRIVATE_ABI, ERC721_PRIVATE_BYTECODE, EXCHANGE_ABI_LOGIC, ERC20_ABI, PURCHASE_BOX_ABI, PURCHASE_TOKEN_ABI } from "./abi-bytecode"
 import { getReceipt, convertObjectKeyToSnakeCase } from "./common"
 import { EXCHANGE_ADDRESS, PURCHASE_BOX_ADDRESS, PURCHASE_TOKEN_ADDRESS } from "./config"
@@ -86,10 +86,7 @@ export const checkBeforeBuy = async (addressApproved, tokenERC20Address, amountN
     if (tokenERC20Address === constants.AddressZero) return true
     const contractInstance = new ethers.Contract(tokenERC20Address, ERC20_ABI, window.provider)
     return contractInstance.allowance(window.mainAddress, addressApproved)
-        .then(approveAmount => {
-            if (approveAmount.toString() < amountNeeded) return approveAmount.toString() < amountNeeded ? false : true
-            return true
-        })
+        .then(approveAmount => approveAmount.gte(BigNumber.from(amountNeeded)) ? true : false)
 }
 
 export const approveAllERC20 = async (tokenERC20Address) => {

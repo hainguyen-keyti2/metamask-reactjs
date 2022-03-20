@@ -19,7 +19,7 @@ function PurchaseToken() {
         if (!roundInfo || qty === 0) return openNotification(key, "Invalid input!", "Please get round info and fill in qty more than 0!").error()
         const convertToWei = utils.parseUnits(qty.toString(), "ether").toString()
         const paymentContract = await getIDOPaymentContract()
-        const amountDueParsed = utils.parseEther(amountDue.toString()).toString()
+        const amountDueParsed = utils.parseEther(Math.ceil(amountDue).toString()).toString()
         checkBeforeBuy(PURCHASE_TOKEN_ADDRESS, paymentContract, amountDueParsed)
             .then(async isOK => {
                 if (!isOK) {
@@ -78,10 +78,10 @@ function PurchaseToken() {
             <Tag color="volcano">Result get round id</Tag>
             <Input.TextArea rows={5} value={JSON.stringify(roundInfo)} disabled />
             <Tag color="volcano">Qty</Tag>
-            <Tag color="green">SPC</Tag>
+            <Tag color="green">SPC (TPP)</Tag>
             <Input value={qty} onChange={(e) => handleChangeDueAmount(e.target.value)} disabled={roundInfo ? false : true} />
             <Tag color="volcano">Due amount</Tag>
-            <Tag color="green">BUSD</Tag>
+            <Tag color="green">ING (BUSD)</Tag>
             <Input value={amountDue} disabled />
             <Tag color="volcano">Transaction hash</Tag>
             <a href={txHash ? `https://testnet.bscscan.com/tx/${txHash}` : null} target="_blank" rel="noreferrer">

@@ -61,14 +61,20 @@ export const openNotification = (key, message, description) => {
     }
 }
 
+const FIELD_PARSE_DECIMAL = ["totalSupply", "current", "totalEarned", "minQty", "maxQty"]
+
 export const convertObjectKeyToSnakeCase = (object) => {
     let result = {}
     for (const property in object)
         if (!Number.isInteger(Number(property)))
-            result[_.snakeCase(property)] = BigNumber.isBigNumber(object[property]) ? autoFormatEtherAmount(object[property]) : object[property]
+            result[_.snakeCase(property)] = BigNumber.isBigNumber(object[property]) ?
+                FIELD_PARSE_DECIMAL.includes(property) ?
+                    autoFormatEtherAmount(object[property]) :
+                    object[property].toString() :
+                object[property]
     return result
 }
 
 export const autoFormatEtherAmount = (bnValue) => {
-    return (Number.isInteger(Number(utils.formatUnits(bnValue))) ? Number(utils.formatUnits(bnValue)) : Number(bnValue.toString())).toString()
+    return ((Number(utils.formatUnits(bnValue))) ? Number(utils.formatUnits(bnValue)) : Number(bnValue.toString())).toString()
 }
