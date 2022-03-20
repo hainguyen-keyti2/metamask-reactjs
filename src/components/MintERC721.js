@@ -1,49 +1,49 @@
-import React, { useState } from 'react';
-import { Button, Card, Input, Tag, Form } from 'antd';
-import { mintToken, mintTokenReceipt } from '../utils/blockchain'
-import { openNotification, parseEthereumError } from '../utils/common'
+import React, { useState } from "react"
+import { Button, Card, Input, Tag, Form } from "antd"
+import { mintToken, mintTokenReceipt } from "../utils/blockchain"
+import { openNotification, parseEthereumError } from "../utils/common"
 
-const key = 'MintERC721'
+const key = "MintERC721"
 
 function MintERC721() {
 
     const [mintInfo, setMintInfo] = useState({
-        txHash: '',
-        tokenId: ''
-    });
+        txHash: "",
+        tokenId: ""
+    })
 
-    const [ form ] = Form.useForm()
+    const [form] = Form.useForm()
 
     const onFinishForm = (values) => {
         mintToken(values.contractAddress, values.toAddress, values.tokenUri)
-        .then( txHash => {
-            openNotification(key, "Waiting transaction pending!", txHash).loading()
-            setMintInfo((prevState) => {
-                return {
-                    ...prevState,
-                    txHash
-                }
+            .then(txHash => {
+                openNotification(key, "Waiting transaction pending!", txHash).loading()
+                setMintInfo((prevState) => {
+                    return {
+                        ...prevState,
+                        txHash
+                    }
+                })
+                return mintTokenReceipt(txHash)
             })
-            return mintTokenReceipt(txHash)
-        })
-        .then (receipt => {
-            openNotification(key, "Transaction successed!", `Transaction fee : ${receipt.fee} BNB`).success()
-            setMintInfo((prevState) => {
-                return {
-                    ...prevState,
-                    tokenId: receipt.tokenId
-                }
+            .then(receipt => {
+                openNotification(key, "Transaction successed!", `Transaction fee : ${receipt.fee} BNB`).success()
+                setMintInfo((prevState) => {
+                    return {
+                        ...prevState,
+                        tokenId: receipt.tokenId
+                    }
+                })
             })
-        })
-        .catch( error => {
-            openNotification(key, "Transaction error!", parseEthereumError(error)).error()
-        })
-    };
+            .catch(error => {
+                openNotification(key, "Transaction error!", parseEthereumError(error)).error()
+            })
+    }
 
     return (
         <Card title={
-                <Button type="text" onClick={form.submit} style={{ color: 'magenta', border: '1px solid red'}}>Mint NFT</Button>
-            } style={{ width: 1000 }}>
+            <Button type="text" onClick={form.submit} style={{ color: "magenta", border: "1px solid red" }}>Mint NFT</Button>
+        } style={{ width: 1000 }}>
             <Form
                 form={form}
                 initialValues={{
@@ -51,21 +51,21 @@ function MintERC721() {
                     toAddress: "0xb1868FeEb5D9306BF5eee12f5a56b3C74616DF3C",
                     tokenUri: "https://bafkreif7egndgkopo5sxdjvbezpfigwcmyeeqpxjfo7inmzquefmvcusqi.ipfs.dweb.link/"
                 }}
-                style={{ backgroundColor: '#f5f6f7', padding: '15px', border: '1px solid #d9dadb'}}
+                style={{ backgroundColor: "#f5f6f7", padding: "15px", border: "1px solid #d9dadb" }}
                 labelCol={{ span: 4 }}
                 wrapperCol={{ span: 14 }}
                 layout="horizontal"
                 onFinish={onFinishForm}
                 size="small"
-                >
+            >
                 <Tag color="volcano">NFT information</Tag>
-                <Form.Item name='contractAddress' label="Collectible address" rules={[{ type: 'string', required: true, pattern: (/^0x[a-fA-F0-9]{40}$/), message: 'Please input string of number, max 256 character!' }]}>
+                <Form.Item name='contractAddress' label="Collectible address" rules={[{ type: "string", required: true, pattern: (/^0x[a-fA-F0-9]{40}$/), message: "Please input string of number, max 256 character!" }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item name='toAddress' label="Mint to address" rules={[{ type: 'string', required: true, pattern: (/^0x[a-fA-F0-9]{40}$/), message: 'Please input hexstring of address!' }]}>
+                <Form.Item name='toAddress' label="Mint to address" rules={[{ type: "string", required: true, pattern: (/^0x[a-fA-F0-9]{40}$/), message: "Please input hexstring of address!" }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item name='tokenUri' label="Token uri" rules={[{ type: 'string', required: true, message: 'Please input token uri!' }]}>
+                <Form.Item name='tokenUri' label="Token uri" rules={[{ type: "string", required: true, message: "Please input token uri!" }]}>
                     <Input.TextArea rows={2} />
                 </Form.Item>
             </Form>

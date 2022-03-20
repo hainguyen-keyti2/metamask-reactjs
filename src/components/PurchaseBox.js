@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { constants } from 'ethers'
-import { Button, Card, Input, Tag, Space } from 'antd';
-import { purchaseBox, checkBeforeBuy, approveERC20 } from '$/src/utils/blockchain'
-import { openNotification, getReceipt, parseEthereumError } from '../utils/common'
-import { getParseBoxParse } from '$/src/utils/api'
-import  { PURCHASE_BOX_ADDRESS } from '$/src/utils/config'
+import React, { useState } from "react"
+import { constants } from "ethers"
+import { Button, Card, Input, Tag, Space } from "antd"
+import { purchaseBox, checkBeforeBuy, approveERC20 } from "../utils/blockchain"
+import { openNotification, getReceipt, parseEthereumError } from "../utils/common"
+import { getParseBoxParse } from "../utils/api"
+import { PURCHASE_BOX_ADDRESS } from "../utils/config"
 
 const key = "PurchaseBox"
 
@@ -39,56 +39,56 @@ const data = [
 ]
 
 function PurchaseBox() {
-    const [txHash, setTxHash] = useState('');
+    const [txHash, setTxHash] = useState("")
 
     const hanldePurchaseBox = (boxId) => {
         const boxData = data[boxId - 1]
         checkBeforeBuy(PURCHASE_BOX_ADDRESS, boxData.paymentContract, boxData.scPrice)
-        .then( async isOK => {
-            if (!isOK) {
-                openNotification(key, "Transaction error!", "Please approve amount token before listing").loading()
-                await approveERC20(PURCHASE_BOX_ADDRESS, boxData.paymentContract, boxData.scPrice)
-                .then( txHash => {
-                    openNotification(key, "Waiting transaction pending!", txHash).loading()
-                    return getReceipt(txHash)
-                })
-                .then(receipt => {
-                    openNotification(key, "Transaction successed!", `Transaction fee : ${receipt.fee} BNB`).success()
-                })
-                .catch( error => {
-                    throw error
-                })
-            }
-            return boxData.scInput
-        })
-        .then(inputData => {
-            const value = (boxData.paymentContract === constants.AddressZero) ? boxData.scPrice : '0'
-            return purchaseBox(inputData, value)
-        })
-        .then( txHash => {
-            openNotification(key, "Waiting transaction pending!", txHash).loading()
-            getParseBoxParse(txHash)
-            setTxHash(txHash)
-            return getReceipt(txHash)
-        })
-        .then(receipt => {
-            openNotification(key, "Transaction successed!", `Transaction fee : ${receipt.fee} BNB`).success()
-        })
-        .catch( error => {
-            openNotification(key, "Transaction error!", parseEthereumError(error)).error()
-        })
-    };
+            .then(async isOK => {
+                if (!isOK) {
+                    openNotification(key, "Transaction error!", "Please approve amount token before listing").loading()
+                    await approveERC20(PURCHASE_BOX_ADDRESS, boxData.paymentContract, boxData.scPrice)
+                        .then(txHash => {
+                            openNotification(key, "Waiting transaction pending!", txHash).loading()
+                            return getReceipt(txHash)
+                        })
+                        .then(receipt => {
+                            openNotification(key, "Transaction successed!", `Transaction fee : ${receipt.fee} BNB`).success()
+                        })
+                        .catch(error => {
+                            throw error
+                        })
+                }
+                return boxData.scInput
+            })
+            .then(inputData => {
+                const value = (boxData.paymentContract === constants.AddressZero) ? boxData.scPrice : "0"
+                return purchaseBox(inputData, value)
+            })
+            .then(txHash => {
+                openNotification(key, "Waiting transaction pending!", txHash).loading()
+                getParseBoxParse(txHash)
+                setTxHash(txHash)
+                return getReceipt(txHash)
+            })
+            .then(receipt => {
+                openNotification(key, "Transaction successed!", `Transaction fee : ${receipt.fee} BNB`).success()
+            })
+            .catch(error => {
+                openNotification(key, "Transaction error!", parseEthereumError(error)).error()
+            })
+    }
 
     return (
         <Card title={
             <Space size={30}>
-                <Button type="text" onClick={() => hanldePurchaseBox(1)} style={{ color: 'magenta', border: '1px solid red'}}>Purchase Box 1</Button>
-                <Button type="text" onClick={() => hanldePurchaseBox(2)} style={{ color: 'magenta', border: '1px solid red'}}>Purchase Box 2</Button>
-                <Button type="text" onClick={() => hanldePurchaseBox(3)} style={{ color: 'magenta', border: '1px solid red'}}>Purchase Box 3</Button>
+                <Button type="text" onClick={() => hanldePurchaseBox(1)} style={{ color: "magenta", border: "1px solid red" }}>Purchase Box 1</Button>
+                <Button type="text" onClick={() => hanldePurchaseBox(2)} style={{ color: "magenta", border: "1px solid red" }}>Purchase Box 2</Button>
+                <Button type="text" onClick={() => hanldePurchaseBox(3)} style={{ color: "magenta", border: "1px solid red" }}>Purchase Box 3</Button>
             </Space>
         } style={{ width: 1000 }}>
             <Tag color="volcano">Transaction hash</Tag>
-            <Input value={txHash} disabled/>
+            <Input value={txHash} disabled />
         </Card>
     )
 }
