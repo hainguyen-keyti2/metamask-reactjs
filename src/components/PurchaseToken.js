@@ -78,7 +78,7 @@ function PurchaseToken() {
             <Tag color="volcano">Result get round id</Tag>
             <Input.TextArea rows={5} value={JSON.stringify(roundInfo)} disabled />
             <Tag color="volcano">Qty</Tag>
-            <Tag color="green">SPC (TPP)</Tag>
+            <Tag color="green">TPP (SPC)</Tag>
             <Input value={qty} onChange={(e) => handleChangeDueAmount(e.target.value)} disabled={roundInfo ? false : true} />
             <Tag color="volcano">Due amount</Tag>
             <Tag color="green">ING (BUSD)</Tag>
