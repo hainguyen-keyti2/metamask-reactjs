@@ -1,8 +1,8 @@
 /* eslint-disable no-throw-literal */
 import { ethers, utils, constants, BigNumber } from "ethers"
-import { ERC721_PRIVATE_ABI, ERC721_PRIVATE_BYTECODE, EXCHANGE_ABI_LOGIC, ERC20_ABI, PURCHASE_BOX_ABI, PURCHASE_TOKEN_ABI } from "./abi-bytecode"
+import { ERC721_PRIVATE_ABI, ERC721_PRIVATE_BYTECODE, EXCHANGE_ABI_LOGIC, ERC20_ABI, PURCHASE_BOX_ABI, PURCHASE_TOKEN_ABI, LAUNCHPAD_STAKING_ABI } from "./abi-bytecode"
 import { getReceipt, convertObjectKeyToSnakeCase } from "./common"
-import { EXCHANGE_ADDRESS, PURCHASE_BOX_ADDRESS, PURCHASE_TOKEN_ADDRESS } from "./config"
+import { EXCHANGE_ADDRESS, PURCHASE_BOX_ADDRESS, PURCHASE_TOKEN_ADDRESS, LAUNCHPAD_STAKING_ADDRESS } from "./config"
 
 export const mintToken = async (contractAddress, to, tokenUri) => {
     const contractWithSigner = new ethers.Contract(contractAddress, ERC721_PRIVATE_ABI, window.signer)
@@ -174,6 +174,32 @@ export const getDecimalToken = async (tokenAddress) => {
     const decimal = await contractInstance.decimals()
     return decimal
 }
+
+export const launchpadStaking = async (stakeId, amountStake) => {
+    const contractInstance = new ethers.Contract(LAUNCHPAD_STAKING_ADDRESS, LAUNCHPAD_STAKING_ABI, window.signer)
+    const tx = await contractInstance.stake(stakeId, amountStake)
+    return tx.hash
+}
+
+export const launchpadWithdraw = async (stakeId, stakeIndex) => {
+    const contractInstance = new ethers.Contract(LAUNCHPAD_STAKING_ADDRESS, LAUNCHPAD_STAKING_ABI, window.signer)
+    const tx = await contractInstance.withdraw(stakeId, stakeIndex)
+    return tx.hash
+}
+
+export const getReward = async (stakeId, stakeIndex) => {
+    const contractInstance = new ethers.Contract(LAUNCHPAD_STAKING_ADDRESS, LAUNCHPAD_STAKING_ABI, window.signer)
+    const result = await contractInstance.getReward(stakeId, stakeIndex)
+    return result.map(record => Number(utils.formatEther(record)).toString())
+}
+
+export const getStakingPoolPaymentContract = async (stakeId) => {
+    const contractInstance = new ethers.Contract(LAUNCHPAD_STAKING_ADDRESS, LAUNCHPAD_STAKING_ABI, window.signer)
+    const pool = await contractInstance.getStakingPools([stakeId])
+    return pool.length > 0 ? pool[0].tokenStakeAddress : null
+}
+
+
 
 
 // const main = async () => {

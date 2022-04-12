@@ -73,7 +73,7 @@ function PurchaseToken() {
         <Card title={<Button type="text" onClick={hanldePurchaseToken} style={{ color: "magenta", border: "1px solid red" }}>Purchase token</Button>
         } style={{ width: 1000 }}>
             <Tag color="volcano">Round ID</Tag>
-            <Button type="text" onClick={handleGetRoundInfo} style={{ color: "green", border: "1px solid green" }}>Get round info</Button>
+            <Button disabled={roundId ? false : true} type="text" onClick={handleGetRoundInfo} style={{ color: "green", border: "1px solid green" }}>Get round info</Button>
             <Input value={roundId} onChange={(e) => setRoundId(e.target.value)} />
             <Tag color="volcano">Result get round id</Tag>
             <Input.TextArea rows={5} value={JSON.stringify(roundInfo)} disabled />
