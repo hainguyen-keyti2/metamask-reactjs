@@ -1,17 +1,17 @@
 import React, { useState } from "react"
 import { Button, Card, Input, Tag } from "antd"
-import { purchaseBox } from "../utils/blockchain"
+import { purchaseSlotRI } from "../utils/blockchain"
 import { openNotification, getReceipt, parseEthereumError } from "../utils/common"
 
-const key = "PurchaseBox"
+const key = "PurchaseSlotRI"
 
-function PurchaseBox() {
+function PurchaseSlotRI() {
     const [txHash, setTxHash] = useState("")
-    const [boxInput, setBoxInput] = useState("")
+    const [slotRIInput, setSlotRIInput] = useState("")
     const [value, setValue] = useState()
 
-    const hanldePurchaseBox = () => {
-        purchaseBox(boxInput, value)
+    const hanldePurchaseSlotRI = () => {
+        purchaseSlotRI(slotRIInput, value)
             .then(txHash => {
                 openNotification(key, "Waiting transaction pending!", txHash).loading()
                 setTxHash(txHash)
@@ -27,10 +27,10 @@ function PurchaseBox() {
 
     return (
         <Card title={
-            <Button type="text" onClick={hanldePurchaseBox} style={{ color: "magenta", border: "1px solid red" }}>Purchase Box</Button>
+            <Button type="text" onClick={hanldePurchaseSlotRI} style={{ color: "magenta", border: "1px solid red" }}>Purchase Slot RI</Button>
         } style={{ width: 1000 }}>
-            <Tag color="volcano">Box input</Tag>
-            <Input.TextArea rows={5} value={boxInput} onChange={(e) => setBoxInput(e.target.value)} />
+            <Tag color="volcano">Slot RI input</Tag>
+            <Input.TextArea rows={5} value={slotRIInput} onChange={(e) => setSlotRIInput(e.target.value)} />
             <Tag color="volcano">value</Tag>
             <Input value={value} onChange={(e) => setValue(e.target.value)} />
             <Tag color="volcano">Transaction hash</Tag>
@@ -39,4 +39,4 @@ function PurchaseBox() {
     )
 }
 
-export default PurchaseBox
+export default PurchaseSlotRI

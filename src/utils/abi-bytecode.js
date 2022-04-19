@@ -1203,7 +1203,286 @@ export const PURCHASE_BOX_ABI = [
     }
 ]
 
-export const PURCHASE_TOKEN_ABI = [
+export const PURCHASE_SLOT_RI_ABI = [
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "previousOwner",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "OwnershipTransferred",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            }
+        ],
+        "name": "Paused",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "pauser",
+                "type": "address"
+            }
+        ],
+        "name": "Pauser",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "buyer",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "gameContract",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "slotId",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "receiver",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "paymentContract",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "price",
+                "type": "uint256"
+            }
+        ],
+        "name": "SlotRIPaid",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            }
+        ],
+        "name": "Unpaused",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "unpauser",
+                "type": "address"
+            }
+        ],
+        "name": "Unpauser",
+        "type": "event"
+    },
+    {
+        "inputs": [],
+        "name": "foundationAddress",
+        "outputs": [
+            {
+                "internalType": "address payable",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address payable",
+                "name": "_foundation",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "_verifier",
+                "type": "address"
+            }
+        ],
+        "name": "initialize",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "pause",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "paused",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "bytes",
+                "name": "orderData",
+                "type": "bytes"
+            }
+        ],
+        "name": "purchaseSlotRI",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "renounceOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address payable",
+                "name": "newFoundationAddress",
+                "type": "address"
+            }
+        ],
+        "name": "setFoundationAddress",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "newVerifier",
+                "type": "address"
+            }
+        ],
+        "name": "setVerifier",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "transferOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "unpause",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "verifier",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]
+
+export const LAUNCHPAD_IDO_ABI = [
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "roundId",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "bool",
+                "name": "isOpen",
+                "type": "bool"
+            }
+        ],
+        "name": "GovernmentRound",
+        "type": "event"
+    },
     {
         "anonymous": false,
         "inputs": [
@@ -1322,35 +1601,21 @@ export const PURCHASE_TOKEN_ABI = [
         "inputs": [
             {
                 "internalType": "uint256",
-                "name": "roundId",
+                "name": "_roundId",
                 "type": "uint256"
             },
             {
-                "internalType": "address",
-                "name": "userAddress",
-                "type": "address"
-            }
-        ],
-        "name": "checkInWhiteList",
-        "outputs": [
+                "internalType": "address[]",
+                "name": "_arrInvestor",
+                "type": "address[]"
+            },
             {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
+                "internalType": "uint256[]",
+                "name": "_arrSubtractedValue",
+                "type": "uint256[]"
             }
         ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "roundId",
-                "type": "uint256"
-            }
-        ],
-        "name": "closeRound",
+        "name": "decreaseLineOfCredit",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -1372,7 +1637,48 @@ export const PURCHASE_TOKEN_ABI = [
         "inputs": [
             {
                 "internalType": "uint256",
-                "name": "roundId",
+                "name": "_roundId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "_investor",
+                "type": "address"
+            }
+        ],
+        "name": "getParticipant",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "uint256",
+                        "name": "lineOfCredit",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "amountPurchased",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "isJoined",
+                        "type": "bool"
+                    }
+                ],
+                "internalType": "struct LaunchpadIDO.Investor",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_roundId",
                 "type": "uint256"
             }
         ],
@@ -1384,12 +1690,70 @@ export const PURCHASE_TOKEN_ABI = [
                 "type": "address[]"
             },
             {
-                "internalType": "uint256[]",
-                "name": "listAmountPaid",
-                "type": "uint256[]"
+                "components": [
+                    {
+                        "internalType": "uint256",
+                        "name": "lineOfCredit",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "amountPurchased",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "isJoined",
+                        "type": "bool"
+                    }
+                ],
+                "internalType": "struct LaunchpadIDO.Investor[]",
+                "name": "listInvestor",
+                "type": "tuple[]"
             }
         ],
         "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_roundId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "bool",
+                "name": "_isOpen",
+                "type": "bool"
+            }
+        ],
+        "name": "governmentRound",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_roundId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address[]",
+                "name": "_arrInvestor",
+                "type": "address[]"
+            },
+            {
+                "internalType": "uint256[]",
+                "name": "_arrAddedValue",
+                "type": "uint256[]"
+            }
+        ],
+        "name": "increaseLineOfCredit",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -1414,37 +1778,37 @@ export const PURCHASE_TOKEN_ABI = [
         "inputs": [
             {
                 "internalType": "uint256",
-                "name": "roundId",
+                "name": "_roundId",
                 "type": "uint256"
             },
             {
                 "internalType": "string",
-                "name": "roundName",
+                "name": "_roundName",
                 "type": "string"
             },
             {
                 "internalType": "address",
-                "name": "tokenIDOAddress",
+                "name": "_tokenIDOAddress",
                 "type": "address"
             },
             {
                 "internalType": "uint256",
-                "name": "totalSupply",
+                "name": "_totalSupply",
                 "type": "uint256"
             },
             {
                 "internalType": "uint256",
-                "name": "pricePerPaymentToken",
+                "name": "_pricePerPaymentToken",
                 "type": "uint256"
             },
             {
                 "internalType": "uint256",
-                "name": "minQty",
+                "name": "_minQty",
                 "type": "uint256"
             },
             {
                 "internalType": "uint256",
-                "name": "maxQty",
+                "name": "_maxQty",
                 "type": "uint256"
             }
         ],
@@ -1503,12 +1867,12 @@ export const PURCHASE_TOKEN_ABI = [
         "inputs": [
             {
                 "internalType": "uint256",
-                "name": "roundId",
+                "name": "_roundId",
                 "type": "uint256"
             },
             {
                 "internalType": "uint256",
-                "name": "qty",
+                "name": "_qty",
                 "type": "uint256"
             }
         ],
@@ -1597,7 +1961,7 @@ export const PURCHASE_TOKEN_ABI = [
         "inputs": [
             {
                 "internalType": "uint256",
-                "name": "roundId",
+                "name": "_roundId",
                 "type": "uint256"
             }
         ],
@@ -1628,29 +1992,6 @@ export const PURCHASE_TOKEN_ABI = [
             }
         ],
         "name": "setVaultAddress",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "roundId",
-                "type": "uint256"
-            },
-            {
-                "internalType": "address[]",
-                "name": "participants",
-                "type": "address[]"
-            },
-            {
-                "internalType": "bool",
-                "name": "isAdd",
-                "type": "bool"
-            }
-        ],
-        "name": "setWhiteList",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"

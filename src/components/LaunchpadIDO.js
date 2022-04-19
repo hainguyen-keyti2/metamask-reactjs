@@ -4,11 +4,11 @@ import { Button, Card, Input, Tag } from "antd"
 import { RightCircleFilled } from '@ant-design/icons';
 import { purchaseToken, getRoundInfo, checkBeforeBuy, approveERC20, getIDOPaymentContract } from "../utils/blockchain"
 import { openNotification, getReceipt, parseEthereumError } from "../utils/common"
-import { PURCHASE_TOKEN_ADDRESS } from "../utils/config"
+import { LAUNCHPAD_IDO_ADDRESS } from "../utils/config"
 
-const key = "PurchaseToken"
+const key = "LaunchpadIDO"
 
-function PurchaseToken() {
+function LaunchpadIDO() {
     const [txHash, setTxHash] = useState("")
     const [roundId, setRoundId] = useState("")
     const [qty, setQty] = useState(0)
@@ -20,11 +20,11 @@ function PurchaseToken() {
         const convertToWei = utils.parseUnits(qty.toString(), "ether").toString()
         const paymentContract = await getIDOPaymentContract()
         const amountDueParsed = utils.parseEther(Math.ceil(amountDue).toString()).toString()
-        checkBeforeBuy(PURCHASE_TOKEN_ADDRESS, paymentContract, amountDueParsed)
+        checkBeforeBuy(LAUNCHPAD_IDO_ADDRESS, paymentContract, amountDueParsed)
             .then(async isOK => {
                 if (!isOK) {
                     openNotification(key, "Transaction error!", "Please approve amount token before listing").loading()
-                    await approveERC20(PURCHASE_TOKEN_ADDRESS, paymentContract, amountDueParsed)
+                    await approveERC20(LAUNCHPAD_IDO_ADDRESS, paymentContract, amountDueParsed)
                         .then(txHash => {
                             openNotification(key, "Waiting transaction pending!", txHash).loading()
                             return getReceipt(txHash)
@@ -70,7 +70,7 @@ function PurchaseToken() {
     }
 
     return (
-        <Card title={<Button type="text" onClick={hanldePurchaseToken} style={{ color: "magenta", border: "1px solid red" }}>Purchase token</Button>
+        <Card title={<Button type="text" onClick={hanldePurchaseToken} style={{ color: "magenta", border: "1px solid red" }}>Launchpad IDO</Button>
         } style={{ width: 1000 }}>
             <Tag color="volcano">Round ID</Tag>
             <Button disabled={roundId ? false : true} type="text" onClick={handleGetRoundInfo} style={{ color: "green", border: "1px solid green" }}>Get round info</Button>
@@ -92,4 +92,4 @@ function PurchaseToken() {
     )
 }
 
-export default PurchaseToken
+export default LaunchpadIDO

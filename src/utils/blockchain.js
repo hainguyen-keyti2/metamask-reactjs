@@ -1,8 +1,8 @@
 /* eslint-disable no-throw-literal */
 import { ethers, utils, constants, BigNumber } from "ethers"
-import { ERC721_PRIVATE_ABI, ERC721_PRIVATE_BYTECODE, EXCHANGE_ABI_LOGIC, ERC20_ABI, PURCHASE_BOX_ABI, PURCHASE_TOKEN_ABI, LAUNCHPAD_STAKING_ABI } from "./abi-bytecode"
+import { ERC721_PRIVATE_ABI, ERC721_PRIVATE_BYTECODE, EXCHANGE_ABI_LOGIC, ERC20_ABI, PURCHASE_BOX_ABI, PURCHASE_SLOT_RI_ABI, LAUNCHPAD_IDO_ABI, LAUNCHPAD_STAKING_ABI } from "./abi-bytecode"
 import { getReceipt, convertObjectKeyToSnakeCase } from "./common"
-import { EXCHANGE_ADDRESS, PURCHASE_BOX_ADDRESS, PURCHASE_TOKEN_ADDRESS, LAUNCHPAD_STAKING_ADDRESS } from "./config"
+import { EXCHANGE_ADDRESS, PURCHASE_BOX_ADDRESS, PURCHASE_SLOT_RI_ADDRESS, LAUNCHPAD_IDO_ADDRESS, LAUNCHPAD_STAKING_ADDRESS } from "./config"
 
 export const mintToken = async (contractAddress, to, tokenUri) => {
     const contractWithSigner = new ethers.Contract(contractAddress, ERC721_PRIVATE_ABI, window.signer)
@@ -146,25 +146,31 @@ export const purchaseBox = async (inputData, value) => {
     return tx.hash
 }
 
+export const purchaseSlotRI = async (inputData, value) => {
+    const contractInstance = new ethers.Contract(PURCHASE_SLOT_RI_ADDRESS, PURCHASE_SLOT_RI_ABI, window.signer)
+    const tx = await contractInstance.purchaseSlotRI(inputData, { value })
+    return tx.hash
+}
+
 export const purchaseToken = async (roundId, qty) => {
-    const contractInstance = new ethers.Contract(PURCHASE_TOKEN_ADDRESS, PURCHASE_TOKEN_ABI, window.signer)
+    const contractInstance = new ethers.Contract(LAUNCHPAD_IDO_ADDRESS, LAUNCHPAD_IDO_ABI, window.signer)
     const tx = await contractInstance.purchaseToken(roundId, qty)
     return tx.hash
 }
 
 export const getRoundInfo = async (roundId) => {
-    const contractInstance = new ethers.Contract(PURCHASE_TOKEN_ADDRESS, PURCHASE_TOKEN_ABI, window.signer)
+    const contractInstance = new ethers.Contract(LAUNCHPAD_IDO_ADDRESS, LAUNCHPAD_IDO_ABI, window.signer)
     return contractInstance.rounds(roundId)
         .then(data => convertObjectKeyToSnakeCase({ ...data }))
 }
 
 export const getIDOPaymentContract = () => {
-    const contractInstance = new ethers.Contract(PURCHASE_TOKEN_ADDRESS, PURCHASE_TOKEN_ABI, window.signer)
+    const contractInstance = new ethers.Contract(LAUNCHPAD_IDO_ADDRESS, LAUNCHPAD_IDO_ABI, window.signer)
     return contractInstance.paymentContract()
 }
 
 export const getPriceListedToken = async (tokenAddress) => {
-    const contractInstance = new ethers.Contract(PURCHASE_TOKEN_ADDRESS, PURCHASE_TOKEN_ABI, window.provider)
+    const contractInstance = new ethers.Contract(LAUNCHPAD_IDO_ADDRESS, LAUNCHPAD_IDO_ABI, window.provider)
     const price = await contractInstance.ListedToken(tokenAddress)
     return price
 }

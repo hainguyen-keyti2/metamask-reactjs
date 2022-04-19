@@ -47,18 +47,18 @@ export const getBoxInputAction = async (body) => {
         })
 }
 
-export const getParseBoxParse = async (txHash) => {
-    return axios.get(`${BASE_URI}/get-parse-box-paid`, {
-        params: {
-            tx_hash: txHash
-        }
-    })
-        .then(rs => {
-            console.log(rs.data.status ? rs.data.result : rs.data.error.details ? (`${rs.data.error.message} - ${rs.data.error.details}`) : rs.data.error.message)
-            return rs.data.status ? rs.data.result : rs.data.error.details ? (`${rs.data.error.message} - ${rs.data.error.details}`) : rs.data.error.message
-        })
-        .catch((error) => {
-            console.log("Error at login kiaaaaa")
-            console.log(error)
-        })
-}
+// export const getParseBoxParse = async (txHash) => {
+//     return axios.get(`${BASE_URI}/get-parse-box-paid`, {
+//         params: {
+//             tx_hash: txHash
+//         }
+//     })
+//         .then(rs => {
+//             console.log(rs.data.status ? rs.data.result : rs.data.error.details ? (`${rs.data.error.message} - ${rs.data.error.details}`) : rs.data.error.message)
+//             return rs.data.status ? rs.data.result : rs.data.error.details ? (`${rs.data.error.message} - ${rs.data.error.details}`) : rs.data.error.message
+//         })
+//         .catch((error) => {
+//             console.log("Error at login kiaaaaa")
+//             console.log(error)
+//         })
+// }

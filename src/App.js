@@ -1,5 +1,4 @@
 import React from "react"
-import "antd/dist/antd.css"
 import MetamaskInteract from "./pages/MetamaskInteract"
 import { Tag } from "antd"
 

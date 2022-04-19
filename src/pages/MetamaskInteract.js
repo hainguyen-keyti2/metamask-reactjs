@@ -9,7 +9,9 @@ import ApproveOneERC721 from "../components/ApproveOneERC721"
 import ApproveAllERC20 from "../components/ApproveAllERC20"
 import ApproveERC20 from "../components/ApproveERC20"
 import PurchaseBox from "../components/PurchaseBox"
-import PurchaseToken from "../components/PurchaseToken"
+import PurchaseSlotRI from "../components/PurchaseSlotRI"
+import ParseOrderInput from "../components/ParseOrderInput"
+import LaunchpadIDO from "../components/LaunchpadIDO"
 import LaunchpadStake from "../components/LaunchpadStake"
 import LaunchpadWithdrawStake from "../components/LaunchpadWithdraw"
 
@@ -23,7 +25,9 @@ function MetamaskInteract() {
             <ApproveAllERC20 />
             <ApproveERC20 />
             <PurchaseBox />
-            <PurchaseToken />
+            <PurchaseSlotRI />
+            <ParseOrderInput />
+            <LaunchpadIDO />
             <LaunchpadStake />
             <LaunchpadWithdrawStake />
             <ListingAndPurchase />
