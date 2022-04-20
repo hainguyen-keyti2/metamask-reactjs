@@ -46,7 +46,7 @@ function ParseOrderInput() {
                 <Button type="text" onClick={hanldeParseGameItemInput} style={{ color: "magenta", border: "1px solid red" }}>Parse Order Input For Game Item</Button>
             </Space>
         } style={{ width: 1000 }}>
-            <Tag color="volcano">Slot RI input</Tag>
+            <Tag color="volcano">Encoded Input</Tag>
             <Input.TextArea rows={5} value={orderInput} onChange={(e) => setOrderInput(e.target.value)} />
             <Tag color="volcano">value</Tag>
             <Input.TextArea rows={5} value={resultParsed} disabled />
