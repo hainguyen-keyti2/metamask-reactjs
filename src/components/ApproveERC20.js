@@ -2,16 +2,16 @@ import React, { useState } from "react"
 import { Button, Card, Input, Tag } from "antd"
 import { approveERC20 } from "../utils/blockchain"
 import { openNotification, getReceipt, parseEthereumError } from "../utils/common"
-import { EXCHANGE_ADDRESS } from "../utils/config"
 
 const key = "ApproveERC20"
 function ApproveERC20() {
     const [txHash, setTxHash] = useState("")
     const [paymentAddress, setPaymentAddress] = useState("")
+    const [approvedAddress, setApprovedAddress] = useState("")
     const [amount, setAmount] = useState("")
 
     const handleApproveERC20 = () => {
-        approveERC20(EXCHANGE_ADDRESS, paymentAddress, amount)
+        approveERC20(approvedAddress, paymentAddress, amount)
             .then(txHash => {
                 openNotification(key, "Waiting transaction pending!", txHash).loading()
                 setTxHash(txHash)
@@ -29,6 +29,8 @@ function ApproveERC20() {
         <Card title={<Button type="text" onClick={handleApproveERC20} style={{ color: "magenta", border: "1px solid red" }}>Approve ERC20</Button>} style={{ width: 1000 }}>
             <Tag color="volcano">Payment address</Tag>
             <Input value={paymentAddress} onChange={(e) => setPaymentAddress(e.target.value)} />
+            <Tag color="volcano">Approve for address</Tag>
+            <Input value={approvedAddress} onChange={(e) => setApprovedAddress(e.target.value)} />
             <Tag color="volcano">Amount</Tag>
             <Input value={amount} onChange={(e) => setAmount(e.target.value)} />
             <Tag color="volcano">Transaction hash</Tag>
